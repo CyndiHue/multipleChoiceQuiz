@@ -24,7 +24,7 @@ let examQuestions = [{question:"question 1", answers: ["choice 1", "choice 2", "
 
 let currentQuestion = 0;
 renderQuestion()
-let correctAnswer = examQuestions[currentQuestion].correctAnswer;
+
 
 function renderQuestion(){
   quizQuestion.textContent = (examQuestions[currentQuestion].question);
@@ -37,7 +37,7 @@ function renderQuestion(){
   console.log(examQuestions[currentQuestion].answers[1]);
   console.log(examQuestions[currentQuestion].answers[2]); 
   console.log(examQuestions[currentQuestion].answers[3]);
-  console.log(("correct answer:" + examQuestions[currentQuestion].correctAnswer));
+  
   // if()
   // console.log("correct")
   
@@ -50,24 +50,28 @@ function renderQuestion(){
   }
   
   quizDiv.addEventListener("click", function(event){
-    let element = event.target
+    let element = event.target;
+    let questionAnswer = examQuestions[currentQuestion-1].correctAnswer;
     
     if (element.matches("button")){
-      let yourAnswer = element.getAttribute("id")
-
-    console.log("your answer:" + yourAnswer)
+      let userChoice = element.textContent;
+      
+      console.log("your answer:" + userChoice);
+      console.log("correct answer:" + questionAnswer);
     
-      // if (yourAnswer === correctAnswer){
-      //   console.log("Correct!")
-      // }else {
-      //   console.log("whoops")
-      // }
+    if (userChoice === questionAnswer){
+      console.log("Correct!")
+      alert("Correct!")
+    }else {
+      console.log("whoops")
+      alert("whoops...")
+      timer
+    }
       
       renderQuestion();
       currentQuestion++;
 }});
 currentQuestion++;
-// turn into function or variables 
 
 
 
