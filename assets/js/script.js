@@ -5,15 +5,17 @@ let questionButton2 = document.querySelector("#answer2");
 let questionButton3 = document.querySelector("#answer3");
 let questionButton4 = document.querySelector("#answer4");
 let quizQuestion = document.querySelector("#question");
-//  let timerId = setInterval(function(){
-  //   timer -=1;
-  //   console.log(timer);
-  //   // need to render timer to page textContent? VAlue?
-  
-  // }, 1000)
+let timerEl = document.querySelector("#timeLeft")
 
-// timer=timer-=10;when user gets answer wrong
-// clearInterval(timerID to stop timer)
+ let timerId = setInterval(function(){
+    timer -=1;
+    console.log(timer)
+    timerEl.textContent = timer;
+      
+  }, 1000)
+
+// timer=timer-=10;when user gets answer wrong;
+// clearInterval(timerID to stop timer);
 
 
 let examQuestions = [{question:"question 1", answers: ["choice 1", "choice 2", "choice 3", "choice 4"], correctAnswer:"choice 4"},
@@ -24,7 +26,6 @@ let examQuestions = [{question:"question 1", answers: ["choice 1", "choice 2", "
 
 let currentQuestion = 0;
 renderQuestion()
-
 
 function renderQuestion(){
   quizQuestion.textContent = (examQuestions[currentQuestion].question);
@@ -38,17 +39,7 @@ function renderQuestion(){
   console.log(examQuestions[currentQuestion].answers[2]); 
   console.log(examQuestions[currentQuestion].answers[3]);
   
-  // if()
-  // console.log("correct")
-  
-  // }
-  // else{
-    // console.log("whoops")
-    // }
-    
-    
   }
-  
   quizDiv.addEventListener("click", function(event){
     let element = event.target;
     let questionAnswer = examQuestions[currentQuestion-1].correctAnswer;
@@ -65,7 +56,7 @@ function renderQuestion(){
     }else {
       console.log("whoops")
       alert("whoops...")
-      timer
+      timer-=5;
     }
       
       renderQuestion();
