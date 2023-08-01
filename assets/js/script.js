@@ -7,7 +7,6 @@ let questionButton4 = document.querySelector("#answer4");
 let quizQuestion = document.querySelector("#question");
 let correctMessage = document.querySelector("displayMessage");
 let currentQuestion = 0;
-let timerReset = 0;
 let userScore = 0;
 let timerEl = document.querySelector("#timeLeft");
 let scoreEl = document.querySelector("#score");
@@ -15,17 +14,19 @@ let scoreEl = document.querySelector("#score");
 let startQuizButton = document.querySelector("#startQuiz");
 startQuizButton.addEventListener("click", startQuiz);
 
+quizDiv.style.display = "none";
 
 function startQuiz(){
   startQuizButton.style.display = "none";
+  quizDiv.style.display = "block";
   
   let timerId = setInterval(function(){
     timer --;
     console.log(timer);
-    timerEl.textContent = timer;
-    if (timer === 0 || timer <0) {
-      clearInterval(timerId)
-    timerReset
+    timerEl.textContent = timer + " seconds left";
+    if (timer <=0) {
+      clearInterval(timerId);
+      endGame();
     }
   
   }, 1000)
@@ -37,26 +38,30 @@ let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "
 {question:"The 'cow' in Mulan was really a...", answers: ["hippo", "horse", "dragon", "bee"], correctAnswer:"horse"},
 {question:"Snow White was friends with how many dwarves?", answers: ["seven", "four", "nine", "ten"], correctAnswer:"seven"},
 {question:"What broke the curse of sleeping beauty?", answers: ["sleep", "exercise", "makeup", "a kiss"], correctAnswer:"a kiss"},
-  {question:"Land before time was about?", answers: ["lions", "dinosaurs", "lobsters", "humans"], correctAnswer:"dinosaurs"},
-  {question:"Simba fell in love with...", answers: ["Amy", "Clara", "Nala", "Bella"], correctAnswer:"Nala"},
-  {question:"Finish the title: Beauty and the...", answers: ["Rabbit", "Ogre", "Prince", "Beast"], correctAnswer:"Beast"}];
+{question:"Land before time was about?", answers: ["lions", "dinosaurs", "lobsters", "humans"], correctAnswer:"dinosaurs"},
+{question:"Simba fell in love with...", answers: ["Amy", "Clara", "Nala", "Bella"], correctAnswer:"Nala"},
+{question:"Finish the title: Beauty and the...", answers: ["Rabbit", "Ogre", "Prince", "Beast"], correctAnswer:"Beast"}];
 
-
+function endGame (){
+  clearInterval(timerId);
+  quizDiv.style.display = "none";
+  scoreEl.textContent = "Your Score:" + userScore + "/10";
+}
   renderQuestion()
 
   function renderQuestion(){
-    let prefix = examQuestions[currentQuestion];
+    let questionIndex = examQuestions[currentQuestion];
     
-    quizQuestion.textContent = prefix.question;
-    questionButton1.textContent = prefix.answers[0];
-    questionButton2.textContent = prefix.answers[1];
-    questionButton3.textContent = prefix.answers[2]; 
-    questionButton4.textContent = prefix.answers[3];
-    // console.log(prefix.question);
-    // console.log(prefix.answers[0]);
-    // console.log(prefix.answers[1]);
-    // console.log(prefix.answers[2]); 
-    // console.log(prefix.answers[3]);
+    quizQuestion.textContent = questionIndex.question;
+    questionButton1.textContent = questionIndex.answers[0];
+    questionButton2.textContent = questionIndex.answers[1];
+    questionButton3.textContent = questionIndex.answers[2]; 
+    questionButton4.textContent = questionIndex.answers[3];
+    // console.log(questionIndex.question);
+    // console.log(questionIndex.answers[0]);
+    // console.log(questionIndex.answers[1]);
+    // console.log(questionIndex.answers[2]); 
+    // console.log(questionIndex.answers[3]);
     // for building/editing purposes. comment out once deployed 
   }
 
@@ -71,9 +76,6 @@ let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "
       // console.log("your answer:" + userChoice);
       // console.log("correct answer:" + questionAnswer);
               
-        renderQuestion();
-        currentQuestion++;
-        
       if (userChoice === questionAnswer && timer >= 0){
         console.log("Correct!")
         userScore++;
@@ -84,7 +86,14 @@ let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "
         timer -=5
       }
 
-    // error line 49 when trying to loop and run out od questions wont do 10/10 only 9/10
+      if(currentQuestion >= examQuestions.length){
+        endGame()
+    
+      }else{
+        renderQuestion();
+        currentQuestion++;
+      }
+
   }});
   currentQuestion++;
 }
