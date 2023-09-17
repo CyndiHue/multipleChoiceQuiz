@@ -41,21 +41,21 @@ endDiv.style.display = "none"
 function startTimer(){
   timer --;
   console.log(timer);
-  timerEl.text(timer + " seconds left");
+  timerEl.textContent =timer + " seconds left";
   if (timer <=0) {
     clearInterval(timerId);
     endGame();
   }
-
 }
-
-let timerId = setInterval(startTimer, 1000)
 
 function startQuiz(){
   startQuizButton.style.display = "none";
   quizDiv.style.display = "block";
   endDiv.style.display = "none"
   
+  let timerId = setInterval(startTimer, 1000)
+  startTimer();
+
   let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "dog", "rat", "lizard"], correctAnswer:"dog"},
   {question:"Peppa the Pig hung up on the sheep because they could...", answers: ["smile", "dance", "whistle", "run"], correctAnswer:"whistle"},
   {question:"What is Ratatouille's skill?", answers: ["chef", "body builder", "poet", "teacher"], correctAnswer:"chef"},
