@@ -41,7 +41,7 @@ endDiv.style.display = "none"
 function startTimer(){
   timer --;
   console.log(timer);
-  timerEl.textContent =timer + " seconds left";
+  timerEl.textContent = timer + " seconds left";
   if (timer <=0) {
     clearInterval(timerId);
     endGame();
@@ -67,20 +67,7 @@ function startQuiz(){
   {question:"Simba fell in love with...", answers: ["Amy", "Clara", "Nala", "Bella"], correctAnswer:"Nala"},
   {question:"Finish the title: Beauty and the...", answers: ["Rabbit", "Ogre", "Prince", "Beast"], correctAnswer:"Beast"}];
 
-  function endGame (){
-  clearInterval(timerId);
-  quizDiv.style.display = "none";
-  endDiv.style.display = "block"
-  scoreEl.textContent = "Your Score:" + userScore + "/10";
 
-    quizDiv.addEventListener("click", function(event){
-      let element = event.target;
-      if (element.matches("button")){
-
-        localStorage.getItem("userScore", JSON.stringify(userScore));
-      }
-    })
-  }
   renderQuestion()
 
   function renderQuestion(){
@@ -134,3 +121,19 @@ function startQuiz(){
   }});
   currentQuestion++;
 }
+
+function endGame (){
+  let timerId = setInterval(startTimer, 1000)
+  clearInterval(timerId);
+  quizDiv.style.display = "none";
+  endDiv.style.display = "block"
+  scoreEl.textContent = "Your Score:" + userScore + "/10";
+
+    quizDiv.addEventListener("click", function(event){
+      let element = event.target;
+      if (element.matches("button")){
+
+        localStorage.getItem("userScore", JSON.stringify(userScore));
+      }
+    })
+  }
