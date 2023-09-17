@@ -7,12 +7,29 @@ let quizQuestion = document.querySelector("#question");
 let timerEl = document.querySelector("#timeLeft");
 let scoreEl = document.querySelector("#score");
 let endDiv = document.querySelector("#end")
+
+// let quizDiv = $("#quiz");
+// let questionButton1 = $("#answer1");
+// let questionButton2 = $("#answer2");
+// let questionButton3 = $("#answer3");
+// let questionButton4 = $("#answer4");
+// let quizQuestion = $("#question");
+// let timerEl = $("#timeLeft");
+// let scoreEl = $("#score");
+// let endDiv = $("#end");
+
 // below El currently not being used
 let textEl = document.querySelector("#text")
 let submitEl = document.querySelector("#submit-button")
 
 let startQuizButton = document.querySelector("#startQuiz");
 startQuizButton.addEventListener("click", startQuiz);
+
+// let textEl = $("#text");
+// let submitEl = $("#submit-button");
+// let startQuizButton = $("#startQuiz");
+
+// startQuizButton.on("click", startQuiz);
 
 let timer = 61;  
 let currentQuestion = 0;
@@ -21,22 +38,24 @@ let userScore = 0;
 quizDiv.style.display = "none";
 endDiv.style.display = "none"
 
+function startTimer(){
+  timer --;
+  console.log(timer);
+  timerEl.text(timer + " seconds left");
+  if (timer <=0) {
+    clearInterval(timerId);
+    endGame();
+  }
+
+}
+
+let timerId = setInterval(startTimer, 1000)
+
 function startQuiz(){
   startQuizButton.style.display = "none";
   quizDiv.style.display = "block";
   endDiv.style.display = "none"
   
-  let timerId = setInterval(function(){
-    timer --;
-    console.log(timer);
-    timerEl.textContent = timer + " seconds left";
-    if (timer <=0) {
-      clearInterval(timerId);
-      endGame();
-    }
-  
-  }, 1000)
-
   let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "dog", "rat", "lizard"], correctAnswer:"dog"},
   {question:"Peppa the Pig hung up on the sheep because they could...", answers: ["smile", "dance", "whistle", "run"], correctAnswer:"whistle"},
   {question:"What is Ratatouille's skill?", answers: ["chef", "body builder", "poet", "teacher"], correctAnswer:"chef"},
