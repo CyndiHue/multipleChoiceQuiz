@@ -11,7 +11,7 @@ let timerEl = document.querySelector("#timeLeft");
 let scoreEl = document.querySelector("#score");
 let endDiv = document.querySelector("#end")
 let startQuizButton = document.querySelector("#startQuiz");
-let timer = 61;  
+let timer = 10;  
 let currentQuestion = 0;
 let userScore = 0;
 let examQuestions = [{question:"What animal is Blue's Clues", answers: ["cat", "dog", "rat", "lizard"], correctAnswer:"dog"},
@@ -35,7 +35,7 @@ function myTimer(){
   timerEl.textContent = timer + " seconds left";
   // let timerId = setInterval(startTimer, 1000)
   if (timer <= 0) {
-    clearInterval();
+    clearInterval(timerInterval);
     endGame();
   }
 }
@@ -44,10 +44,11 @@ function startQuiz(){
   startQuizButton.style.display = "none";
   quizDiv.style.display = "block";
   endDiv.style.display = "none"
-  setInterval(myTimer, 1000);
+  timerInterval = setInterval(myTimer, 1000);
   displayQuestionChoices();
   currentQuestion++;
 }
+
 function nextQuestion(event){
   let element = event.target;
   let questionAnswer = examQuestions[currentQuestion-1].correctAnswer;
@@ -90,7 +91,7 @@ function myInterval(){
 };
 
 function stopTimer(){
-  clearInterval(myInterval)
+  clearInterval(timerInterval)
 };
 
 function endGame (){
@@ -99,5 +100,4 @@ function endGame (){
   endDiv.style.display = "block"
   scoreEl.textContent = "Your Score:" + userScore + "/10";
   localStorage.getItem("userScore", JSON.stringify(userScore));
-
 }
