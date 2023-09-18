@@ -1,7 +1,6 @@
 let textEl = document.querySelector("#text")
 let submitEl = document.querySelector("#submit-button")
 // above El currently not being used
-
 let quizDiv = document.querySelector("#quiz");
 let questionButton1 = document.querySelector("#answer1");
 let questionButton2 = document.querySelector("#answer2");
@@ -30,7 +29,7 @@ quizDiv.style.display = "none";
 endDiv.style.display = "none"
 startQuizButton.addEventListener("click", startQuiz);
 
-function startTimer(){
+function myTimer(){
   timer --;
   console.log(timer);
   timerEl.textContent = timer + " seconds left";
@@ -45,18 +44,8 @@ function startQuiz(){
   startQuizButton.style.display = "none";
   quizDiv.style.display = "block";
   endDiv.style.display = "none"
-  
-  startTimer(setInterval(startTimer, 1000))
-  startTimer();
-
- examQuestions
-
-
-  displayQuestionChoices()
-
-
-
-  
+  setInterval(myTimer, 1000);
+  displayQuestionChoices();
   currentQuestion++;
 }
 function nextQuestion(event){
@@ -66,10 +55,6 @@ function nextQuestion(event){
   if (element.matches("button")){
     let userChoice = element.textContent;
     // textContent turns button id to answer selected
-    
-    // console.log("your answer:" + userChoice);
-    // console.log("correct answer:" + questionAnswer);
-            
     if (userChoice === questionAnswer && timer >= 0){
       console.log("Correct!")
       userScore++;
@@ -84,8 +69,6 @@ function nextQuestion(event){
 
     if(currentQuestion === examQuestions.length){
       endGame()
-
-  
     }else{
       displayQuestionChoices();
       currentQuestion++;
@@ -101,21 +84,20 @@ function displayQuestionChoices(){
   questionButton2.textContent = questionIndex.answers[1];
   questionButton3.textContent = questionIndex.answers[2]; 
   questionButton4.textContent = questionIndex.answers[3];
-
 }
+function myInterval(){
+  setInterval(myTimer, 1000)
+};
+
+function stopTimer(){
+  clearInterval(myInterval)
+};
 
 function endGame (){
-  let timerId = setInterval(startTimer, 1000)
-  clearInterval(timerId);
+  stopTimer();
   quizDiv.style.display = "none";
   endDiv.style.display = "block"
   scoreEl.textContent = "Your Score:" + userScore + "/10";
+  localStorage.getItem("userScore", JSON.stringify(userScore));
 
-    quizDiv.addEventListener("click", function(event){
-      let element = event.target;
-      if (element.matches("button")){
-
-        localStorage.getItem("userScore", JSON.stringify(userScore));
-      }
-    })
 }
